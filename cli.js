@@ -1,8 +1,8 @@
 #!/usr/bin/env node //shebang ejecucion desde la cli
 
-const { validateAndFetchLinks } = require("./mdlinks");
+const { mdLinks } = require("./mdlinks");
 const { calculateLinksStats, calculateAndValidateLinksStats } = require("./libreria/stats");
-const { showWelcomeMessage } = require("./libreria/intro");
+const { printGettingStarted } = require("./libreria/start");
 const { colorizeText } = require("./libreria/paths");
 const { log } = console;
 
@@ -14,25 +14,25 @@ const help = options.includes('--help');
 
 const userCli = (route) => {
   if (!route) {
-    return showWelcomeMessage();
+    return printGettingStarted();
   }
   if (help) {
-    return showWelcomeMessage();
+    return printGettingStarted();
   }
   if (!route) {
     new Error(log(colorizeText('RUTA FALTANTE, INGRESA LA RUTA', 'red')));
   } else if (stats && validate) {
-    return validateAndFetchLinks(route, { validate: true })
+    return mdLinks(route, { validate: true })
       .then((arrayOfLinks) => {
         if (arrayOfLinks.length <= 0) {
           new Error(log(colorizeText('ESTE ARCHIVO NO CONTIENE ENLACES, PRUEBA CON OTRA RUTA', 'red')));
         }
         const statsValidate = calculateAndValidateLinksStats(arrayOfLinks);
-        log(colorizeText(` LINKS:\n  Total: ${statsValidate.Total}\n  Unique: ${statsValidate.Unique}\n  Broken: ${statsValidate.Broken}`, 'magenta'));
+        log(colorizeText(` LINKS:\n  Total: ${calculateAndValidateLinksStats.Total}\n  Unique: ${calculateAndValidateLinksStats.Unique}\n  Broken: ${calculateAndValidateLinksStats.Broken}`, 'magenta'));
       })
       .catch((err) => log(err));
   } else if (validate) {
-    return validateAndFetchLinks(route, { validate: true })
+    return mdLinks(route, { validate: true })
       .then((arrayOfLinks) => {
         if (arrayOfLinks.length <= 0) {
           new Error(log(colorizeText('ESTE ARCHIVO NO CONTIENE ENLACES, PRUEBA CON OTRA RUTA', 'red')));
@@ -43,7 +43,7 @@ const userCli = (route) => {
       })
       .catch((err) => log(err));
   } else if (stats) {
-    return validateAndFetchLinks(route, { validate: false })
+    return mdLinks(route, { validate: false })
       .then((arrayOfLinks) => {
         if (arrayOfLinks.length <= 0) {
           new Error(log(colorizeText('ESTE ARCHIVO NO CONTIENE ENLACES, PRUEBA CON OTRA RUTA', 'red')));
@@ -54,7 +54,7 @@ const userCli = (route) => {
       .catch((err) => log(err));
   }
   if (!validate) {
-    return validateAndFetchLinks(route, { validate: false })
+    return mdLinks(route, { validate: false })
       .then((arrayOfLinks) => {
         if (arrayOfLinks.length <= 0) {
           new Error(log(colorizeText('ESTE ARCHIVO NO CONTIENE ENLACES, PRUEBA CON OTRA RUTA', 'red')));

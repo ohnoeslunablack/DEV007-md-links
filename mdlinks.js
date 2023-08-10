@@ -3,12 +3,12 @@ const fs = require("fs");
 
 const {
   convertToAbsolutePath,
-  filterMdLinks,
+  filterMarkdownFiles,
 } = require("./libreria/paths");
 
-const { readAndSearchLinks } = require("./libreria/links");
+const { readMarkdownFilesAndSearchLinks } = require("./libreria/links");
 
-const { validateLinks } = require("./libreria/validate");
+const { validateAndFetchLinks } = require("./libreria/validate");
 
 let examplePath = `${process.cwd()}\\test\\prueba`;
 
@@ -16,13 +16,13 @@ const mdLinks = (path, option) =>
   new Promise((resolve, reject) => {
     const absolutePath = paths.isAbsolute(path) ? path : convertToAbsolutePath(path);
     if (fs.existsSync(path)) {
-      const filteredLinksArray = filterMdLinks(absolutePath);
+      const filteredLinksArray = filterMarkdownFiles(absolutePath);
       if (filteredLinksArray.length === 0) {
         reject('NO HAY ARCHIVOS ".MD", INTENTA CON OTRA RUTA DE MARKDOWN');
       }
-      readAndSearchLinks(filteredLinksArray).then((response) => {
+      readMarkdownFilesAndSearchLinks(filteredLinksArray).then((response) => {
         if (option.validate === true) {
-          validateLinks(response).then((arrOfLinks) => {
+          validateAndFetchLinks(response).then((arrOfLinks) => {
             resolve(arrOfLinks);
           });
         }

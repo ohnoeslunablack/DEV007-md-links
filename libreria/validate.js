@@ -6,7 +6,7 @@ const fetchPromise = import('node-fetch');
  * @returns {Array de objetos de enlaces validados con fetch}
  */
 const validateAndFetchLinks = (arrOfLinks) => {
-    const arrOfValidateLinks = arrOfLinks.map((link) => {
+    const arrOfvalidateAndFetchLinks = arrOfLinks.map((link) => {
         return fetch(link.href).then((response) => {
             return {
                 href: link.href,
@@ -18,7 +18,7 @@ const validateAndFetchLinks = (arrOfLinks) => {
         });
     });
 
-    return Promise.all(arrOfValidateLinks);
+    return Promise.all(arrOfvalidateAndFetchLinks);
 };
 
 module.exports = { validateAndFetchLinks };
