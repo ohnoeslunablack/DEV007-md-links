@@ -1,9 +1,9 @@
 #!/usr/bin/env node //shebang ejecucion desde la cli
 
 const { validateAndFetchLinks } = require("./mdlinks");
-const { calculateLinksStats, calculateAndValidateLinksStats } = require("./library/stats");
-const { showWelcomeMessage } = require("./library/intro");
-const { colorizeText } = require("./library/paths");
+const { calculateLinksStats, calculateAndValidateLinksStats } = require("./libreria/stats");
+const { showWelcomeMessage } = require("./libreria/intro");
+const { colorizeText } = require("./libreria/paths");
 const { log } = console;
 
 const options = process.argv;
