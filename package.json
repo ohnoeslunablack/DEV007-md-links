@@ -1,8 +1,9 @@
 {
   "name": "md-links",
   "version": "0.1.0",
-  "engines": {
-    "node": ">=16.x"
+  "main": "index.js",
+  "directories": {
+    "test": "test"
   },
   "bootcamp": {
     "createdAt": "2023-06-20T14:05:58.211Z",
@@ -15,8 +16,21 @@
     "build": "babel src -d lib",
     "coverage": "serve ./coverage/lcov-report"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ohnoeslunablack/DEV007-md-links.git"
+  },
+  "author": "ohnoeslunablack",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ohnoeslunablack/DEV007-md-links/issues"
+  },
   "bin": {
     "md-Links": "./cli.js"
+  },
+  "homepage": "https://github.com/ohnoeslunablack/DEV007-md-links#readme",
+  "engines": {
+    "node": ">=16.x"
   },
   "dependencies": {
     "@sinclair/typebox": "^0.30.4",
@@ -25,6 +39,7 @@
     "figlet": "^1.5.2",
     "jsdom": "^21.0.0",
     "marked": "^4.2.5",
+    "md-links": "github:ohnoeslunablack/DEV007-md-links",
     "sinon": "^15.2.0"
   },
   "devDependencies": {

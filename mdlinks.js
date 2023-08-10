@@ -4,11 +4,11 @@ const fs = require("fs");
 const {
   convertToAbsolutePath,
   filterMdLinks,
-} = require("./library/paths");
+} = require("./libreria/paths");
 
-const { readAndSearchLinks } = require("./library/links");
+const { readAndSearchLinks } = require("./libreria/links");
 
-const { validateLinks } = require("./library/validate");
+const { validateLinks } = require("./libreria/validate");
 
 let examplePath = `${process.cwd()}\\test\\prueba`;
 
@@ -35,4 +35,4 @@ const mdLinks = (path, option) =>
     }
   });
 
-module.exports = { mdlinks };
+module.exports = { mdLinks };

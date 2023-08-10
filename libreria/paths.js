@@ -2,16 +2,16 @@ const fs = require("fs");
 const path = require("path");
 const chalk = require('chalk');
 
-/*color de texto */
+/* Color de texto */
 const colorizeText = (message, color) => chalk.keyword(color)(message);
 
-/*ruta relativa a absoluta */
+/* Ruta relativa a absoluta */
 const convertToAbsolutePath = (route) => {
     const absolutePath = path.resolve(route);
     return absolutePath;
 };
 
-/*comprueba si una ruta apunta a un archivo */
+/* Comprueba si una ruta apunta a un archivo */
 const isFile = (routeAbsolute) => fs.statSync(routeAbsolute).isFile();
 
 /**
@@ -39,7 +39,7 @@ const getFilesArray = (routeAbsolute) => {
   * @returns Filtra los archivos que son archivos Markdown (".md") y devuelve un array de sus rutas
   */
 const filterMarkdownFiles = (routeAbsolute) => {
-  return getFilesArray(routeAbsolute).filter((file => path.extname(file) === '.md'));
+  return getFilesArray(routeAbsolute).filter((file) => path.extname(file) === '.md');
 };
 
 module.exports = { colorizeText, convertToAbsolutePath, getFilesArray, filterMarkdownFiles, isFile };

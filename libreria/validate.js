@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+const fetchPromise = import('node-fetch');
 
 /**
  * @function validateAndFetchLinks
