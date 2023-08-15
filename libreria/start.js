@@ -14,4 +14,4 @@ const printGettingStarted = ()=> {
 };
 
 
-module.exports={printGettingStarted}
+module.exports={printGettingStarted};
