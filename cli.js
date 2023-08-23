@@ -20,7 +20,7 @@ const userCli = (route) => {
     return printGettingStarted();
   }
   if (!route) {
-    new Error(log(colorizeText('RUTA FALTANTE, INGRESA LA RUTA', 'red')));
+    throw new Error(log(colorizeText('RUTA FALTANTE, INGRESA LA RUTA', 'red')));
   } else if (stats && validate) {
     return mdLinks(route, { validate: true })
       .then((arrayOfLinks) => {

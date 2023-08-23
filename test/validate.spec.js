@@ -4,22 +4,18 @@ const {
   calculateLinksStats, 
   calculateAndValidateLinksStats
 } = require("../libreria/stats");
-const fetch= require ("node-fetch");
-jest.mock("node-fetch");
-
- // validate
 
  const arrLinkOk= [
     {
       href: 'https://www.youtube.com/watch?v=1hpc70_OoAg',
       text: 'nadie lo vio completo',
       file: `${process.cwd()}/test/prueba/archivotest.md`.replace(/\\/g, "/"),
-    }
-  ]
+    },
+  ];
 
   const arrayLinkStatusFail = [
     {
-      href: 'https://www.youtube.com/watch?v=1hpc70_OoAg',
+      href: 'https://www.youtube.com/watch?v=1hAC80_OoAg',
       text: 'nadie lo vio completo',
       file: `${process.cwd()}/test/prueba/archivotest.md`.replace(/\\/g, "/"),
     },
@@ -70,7 +66,7 @@ it("validateAndFetchLinks deberia retornar un array con un objeto del link, este
       text: 'nadie lo vio completo',
       file: `${process.cwd()}/test/prueba/archivotest.md`.replace(/\\/g, "/"),
       status: "400",
-      isOk: "FAIL",
+      isOk: "fail",
     },
   ]);
 });
