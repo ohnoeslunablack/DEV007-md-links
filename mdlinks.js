@@ -35,4 +35,32 @@ const mdLinks = (path, option) =>
     }
   });
 
+  /*const mdLinks = async (path, option) => {
+    try {
+      const absolutePath = paths.isAbsolute(path) ? path : convertToAbsolutePath(path);
+      
+      if (!fs.existsSync(absolutePath)) {
+        throw new Error('LA RUTA NO EXISTE, INTENTA CON OTRA RUTA');
+      }
+      
+      const filteredLinksArray = filterMarkdownFiles(absolutePath);
+      if (filteredLinksArray.length === 0) {
+        throw new Error('NO HAY ARCHIVOS ".MD", INTENTA CON OTRA RUTA DE MARKDOWN');
+      }
+      
+      const response = await readMarkdownFilesAndSearchLinks(filteredLinksArray);
+  
+      if (option.validate === true) {
+        const arrOfLinks = await validateAndFetchLinks(response);
+        return arrOfLinks;
+      }
+  
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  };*/
+  
+
+
 module.exports = { mdLinks };
