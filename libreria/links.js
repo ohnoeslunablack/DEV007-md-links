@@ -1,6 +1,7 @@
 const { marked } = require("marked");
 const fs = require('node:fs/promises');
 const { log } = console;
+const path = require('path');
 
 const readMarkdownFilesAndSearchLinks = (arrOfMd) => {
   const promesas = arrOfMd.map(file => fs.readFile(file, { encoding: 'utf8' })
@@ -20,7 +21,8 @@ const readMarkdownFilesAndSearchLinks = (arrOfMd) => {
 
 const extractLinksFromMarkdown = (data, file) => {
   let arrLinks = [];
-  const route = file.replace(/\\/g, "/");
+  //const route = file.replace(/\\/g, "/");
+const route = path.resolve(file);
 
   const renderer = new marked.Renderer();
   renderer.link = (href, _, text) => {

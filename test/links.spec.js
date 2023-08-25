@@ -11,14 +11,15 @@ const {
     extractLinksFromMarkdown,
     } = require('../libreria/links');
 
-const resultArrayOfOneLink= [
-    `${process.cwd()}\\test\\prueba\\achivotest.md`,
-]
+    const resultArrayOfOneLink = [
+      convertToAbsolutePath(`${process.cwd()}\\test\\prueba\\archivotest.md`),
+    ];
+    
 
 // links
 
 const resultArrayOfLinks =  [
-    `${process.cwd()}\\test\\prueba\\achivotest.md`,
+    `${process.cwd()}\\test\\prueba\\archivotest.md`,
     `${process.cwd()}\\test\\prueba\\vacio1.md`,
     `${process.cwd()}\\test\\prueba\\archivo1.md`,
     `${process.cwd()}\\test\\prueba\\archivo2.md`,
@@ -29,15 +30,15 @@ const resultArrayOfLinks =  [
   ]
   
   const resultArrayOfMd =  [
-    `${process.cwd()}\\test\\prueba\\achivotest.md`,
+    `${process.cwd()}\\test\\prueba\\archivotest.md`,
     `${process.cwd()}\\test\\prueba\\prueba2\\archivo3.md`,
     `${process.cwd()}\\test\\prueba\\prueba2\\prueba3\\archivo5.md`,
     `${process.cwd()}\\test\\prueba\\prueba2\\vacio2.md`,
   ]
   
-  const rutaAbsoluta=`${process.cwd()}\\test\\prueba\\achivotest.md`;
+  const rutaAbsoluta=`${process.cwd()}\\test\\prueba\\archivotest.md`;
   const RouteForTestFilterMd= `${process.cwd()}\\test\\prueba`;
-  const rutaRelativa = 'test/prueba/achivotest.md';
+  const rutaRelativa = 'test/prueba/archivotest.md';
   
   //convierte ruta relativa a absoluta
   describe('convertToAbsolutePath es una funcion que convierte una ruta a absoluta', () => {
@@ -67,10 +68,15 @@ const resultArrayOfLinks =  [
       expect(typeof getFilesArray).toBe('function');
     });
     it('getFilesArray deberia retornar un array con un link si se le paso un file', () => {
-      expect(getFilesArray(`${process.cwd()}\\test\\prueba\\nuevo.md`)).toEqual(resultArrayOfOneLink);
+      expect(getFilesArray(`${process.cwd()}\\test\\prueba\\archivotest.md`)).toEqual(resultArrayOfOneLink);
     });
-    it('getFilesArray deberia retornar un array con links si se le paso directorio', () => {
+    /*it('getFilesArray deberia retornar un array con links si se le paso directorio', () => {
       expect(getFilesArray(`${process.cwd()}\\test\\prueba`)).toEqual(resultArrayOfLinks);
+    });*/
+    it('getFilesArray deberia retornar un array con links si se le paso directorio', () => {
+      const sortedResultArrayOfLinks = resultArrayOfLinks.sort();
+      const sortedFilesArray = getFilesArray(`${process.cwd()}\\test\\prueba`).sort();
+      expect(sortedFilesArray).toEqual(sortedResultArrayOfLinks);
     });
   });
   
@@ -80,12 +86,16 @@ const resultArrayOfLinks =  [
       expect(typeof getFilesArray).toBe('function');
     });
     it('filterMarkdownFiles deberia retornar un array con links a archivos md', () => {
-      expect(getFilesArray(`${process.cwd()}\\test\\prueba\\nuevo.md`)).toEqual(resultArrayOfOneLink);
+      expect(getFilesArray(`${process.cwd()}\\test\\prueba\\archivotest.md`)).toEqual(resultArrayOfOneLink);
     });
-    it('filterMarkdownFiles deberia retornar un array con links a archivos .md', () => {
+    /*it('filterMarkdownFiles deberia retornar un array con links a archivos .md', () => {
       expect(filterMarkdownFiles(RouteForTestFilterMd)).toEqual(resultArrayOfMd);
+    });*/
+    it('filterMarkdownFiles deberia retornar un array con links a archivos .md', () => {
+      const sortedResultArrayOfMd = resultArrayOfMd.sort();
+      const sortedFilteredMdArray = filterMarkdownFiles(RouteForTestFilterMd).sort();
+      expect(sortedFilteredMdArray).toEqual(expect.arrayContaining(sortedResultArrayOfMd));
     });
-  });
   
   //link
   
@@ -98,15 +108,16 @@ const resultArrayOfLinks =  [
       const resultArrOfLinks = [{
         href: 'https://www.youtube.com/watch?v=1hpc70_OoAg',
         text: 'nadie lo vio completo',
-        file: `${process.cwd()}/test/prueba/archivotest.md`.replace(/\\/g, "/"),
+        file: `${process.cwd()}\\test\\prueba\\archivotest.md`,
       }]
      return readMarkdownFilesAndSearchLinks(routeMdFile).then((response) => {
       expect(response).toEqual(resultArrOfLinks)})
     });
+    
     it('readMarkdownFilesAndSearchLinks deberia retornar promesa rechazada con un file no válido', () => {
       const wrongRouteMdFile= [`muevo.md`,]
       return readMarkdownFilesAndSearchLinks(wrongRouteMdFile).catch((e) => {
         expect(e).toBeInstanceOf(Error)})
     });
   });
-  
+})

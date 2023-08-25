@@ -4,6 +4,8 @@ const {
   calculateLinksStats, 
   calculateAndValidateLinksStats
 } = require("../libreria/stats");
+const fetch = require('node-fetch');
+jest.mock('node-fetch');
 
  const arrLinkOk= [
     {
@@ -15,7 +17,7 @@ const {
 
   const arrayLinkStatusFail = [
     {
-      href: 'https://www.youtube.com/watch?v=1hAC80_OoAg',
+      href: 'https://www.youtube.com/want?v=1hpc70_OoAg',
       text: 'nadie lo vio completo',
       file: `${process.cwd()}/test/prueba/archivotest.md`.replace(/\\/g, "/"),
     },
@@ -26,7 +28,7 @@ const {
       href: 'https://www.youtube.com/watch?v=1hpc70_OoAg',
       text: 'nadie lo vio completo',
       file: `${process.cwd()}/test/prueba/archivotest.md`.replace(/\\/g, "/"),
-      status: "200",
+      status: 200,
       isOk: "ok",
     },
   ];
@@ -39,13 +41,13 @@ const {
         })
       );
 
-      await validateAndFetchLinks(arrayLinkOk).then((res) => {
+      await validateAndFetchLinks(arrLinkOk).then((res) => {
         expect(res).toEqual([
           {
             href: 'https://www.youtube.com/watch?v=1hpc70_OoAg',
       text: 'nadie lo vio completo',
       file: `${process.cwd()}/test/prueba/archivotest.md`.replace(/\\/g, "/"),
-      status: "200",
+      status: 200,
       isOk: "ok",
     },
   ]);
@@ -62,10 +64,10 @@ it("validateAndFetchLinks deberia retornar un array con un objeto del link, este
   await validateAndFetchLinks(arrayLinkStatusFail).then((res) => {
     expect(res).toEqual([
       {
-        href: 'https://www.youtube.com/watch?v=1hpc70_OoAg',
+      href: 'https://www.youtube.com/want?v=1hpc70_OoAg',
       text: 'nadie lo vio completo',
       file: `${process.cwd()}/test/prueba/archivotest.md`.replace(/\\/g, "/"),
-      status: "400",
+      status: 400,
       isOk: "fail",
     },
   ]);

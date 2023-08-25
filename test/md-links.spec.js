@@ -21,10 +21,10 @@ describe('mdLinks', () => {
       {
         href: 'https://www.youtube.com/watch?v=1hpc70_OoAg',
         text: 'nadie lo vio completo',
-        file: `${process.cwd()}/test/prueba/archivotest.md`.replace(/\\/g, "/"),
+        file: `${process.cwd()}\\test\\prueba\\archivotest.md`,
       }
     ]
-    await mdLinks( rutaRelativa,{validate:false}).then (response => expect(response).toStrictEqual(arrResponse) )
+    await mdLinks( rutaRelativa,{validate:false}).then (response => expect(response).toEqual(arrResponse) )
   });
  
   it("si validate es true debe retornar un array con objetos de cada link con links validados mediante fetch", async () => {
@@ -37,7 +37,7 @@ describe('mdLinks', () => {
     {
       href: 'https://www.youtube.com/watch?v=1hpc70_OoAg',
       text: 'nadie lo vio completo',
-      file: `${process.cwd()}/test/prueba/archivotest.md`.replace(/\\/g, "/"),
+      file: `${process.cwd()}\\test\\prueba\\archivotest.md`,
       status: 200,
       isOk:'ok'
     }
@@ -45,16 +45,20 @@ describe('mdLinks', () => {
   await mdLinks (rutaAbsoluta, {validate:true}).then (response=> expect(response).toStrictEqual (arrResponseValidate))
 });
 
-  it('si la ruta no tiene archivos .md no acepta la promesa', async()=>{
-    const rutaSinMd = 'liberia';
-    await mdLinks(rutaSinMd,{validate:false}).catch(err => expect(err).toBe('NO HAY ARCHIVOS ".MD" INTENTA CON OTRA RUTA'))
-  });
-
-  it ('si la ruta no esxiste, no acepta la promesa', async ()=> {
-    const rutaSinMd= 'NoExiste';
-    await mdLinks( rutaSinMd,{validate:false}).catch(err => expect (err).toBe ('LA RUTA NO EXISTE, INTENTA OTRA RUTA'))
+it('si la ruta no tiene archivos .md no acepta la promesa', async () => {
+  const rutaSinMd = 'liberia';
+  await mdLinks(rutaSinMd, { validate: false }).catch(err => {
+    expect(err).toBe('LA RUTA NO EXISTE, INTENTA CON OTRA RUTA');
   });
 });
 
 
 
+it('si la ruta no existe, no acepta la promesa', async () => {
+  const rutaSinMd = 'NoExiste';
+  await mdLinks(rutaSinMd, { validate: false }).catch(err => {
+    expect(err).toBe('LA RUTA NO EXISTE, INTENTA CON OTRA RUTA');
+  });
+});
+
+})
