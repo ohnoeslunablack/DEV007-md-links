@@ -32,3 +32,4 @@ const calculateAndValidateLinksStats = (linksArray) => {
 };
 
 module.exports = { calculateLinksStats, calculateAndValidateLinksStats };
+

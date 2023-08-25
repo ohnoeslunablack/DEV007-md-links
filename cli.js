@@ -1,6 +1,7 @@
 const { mdLinks } = require("./mdlinks");
 const { calculateLinksStats, calculateAndValidateLinksStats } = require("./libreria/stats");
 const { printGettingStarted } = require("./libreria/start");
+//const { colorizeText } = require("./libreria/paths");
 const { log } = console;
 
 const options = process.argv;
@@ -65,3 +66,4 @@ const userCli = (route) => {
 }
 
 userCli(route);
+
