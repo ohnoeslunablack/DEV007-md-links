@@ -1,4 +1,4 @@
-const fetchPromise = import('node-fetch');
+const fetch = require('node-fetch');
 
 /**
  * @function validateAndFetchLinks
@@ -22,3 +22,4 @@ const validateAndFetchLinks = (arrOfLinks) => {
 };
 
 module.exports = { validateAndFetchLinks };
+

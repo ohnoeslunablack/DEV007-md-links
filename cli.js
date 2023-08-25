@@ -1,9 +1,6 @@
-#!/usr/bin/env node //shebang ejecucion desde la cli
-
 const { mdLinks } = require("./mdlinks");
 const { calculateLinksStats, calculateAndValidateLinksStats } = require("./libreria/stats");
 const { printGettingStarted } = require("./libreria/start");
-const { colorizeText } = require("./libreria/paths");
 const { log } = console;
 
 const options = process.argv;
@@ -19,26 +16,26 @@ const userCli = (route) => {
   if (help) {
     return printGettingStarted();
   }
-  if (!route) {
-    new Error(log(colorizeText('RUTA FALTANTE, INGRESA LA RUTA', 'red')));
-  } else if (stats && validate) {
-    return mdLinks(route, { validate: true })
-      .then((arrayOfLinks) => {
-        if (arrayOfLinks.length <= 0) {
-          new Error(log(colorizeText('ESTE ARCHIVO NO CONTIENE ENLACES, PRUEBA CON OTRA RUTA', 'red')));
-        }
-        const statsValidate = calculateAndValidateLinksStats(arrayOfLinks);
-        log(colorizeText(` LINKS:\n  Total: ${calculateAndValidateLinksStats.Total}\n  Unique: ${calculateAndValidateLinksStats.Unique}\n  Broken: ${calculateAndValidateLinksStats.Broken}`, 'magenta'));
-      })
-      .catch((err) => log(err));
+      if (!route) {
+        throw new Error(log('RUTA FALTANTE, INGRESA LA RUTA'));
+      } else if (stats && validate) {
+        return mdLinks(route, { validate: true })
+          .then((arrayOfLinks) => {
+            if (arrayOfLinks.length <= 0) {
+              throw new Error(log('ESTE ARCHIVO NO CONTIENE ENLACES, PRUEBA CON OTRA RUTA'));
+            }
+            const statsValidate = calculateAndValidateLinksStats(arrayOfLinks);
+            log(` LINKS:\n  Total: ${statsValidate.Total}\n  Unique: ${statsValidate.Unique}\n  Broken: ${statsValidate.Broken}`);
+          })
+          .catch((err) => log(err));
   } else if (validate) {
     return mdLinks(route, { validate: true })
       .then((arrayOfLinks) => {
         if (arrayOfLinks.length <= 0) {
-          new Error(log(colorizeText('ESTE ARCHIVO NO CONTIENE ENLACES, PRUEBA CON OTRA RUTA', 'red')));
+          new Error(log('ESTE ARCHIVO NO CONTIENE ENLACES, PRUEBA CON OTRA RUTA'));
         }
         arrayOfLinks.forEach((link) => {
-          log(colorizeText(`Route: ${link.file}\nLink: ${link.href}\nText: ${link.text}\nStatus: ${link.status}\nIsOk? ${link.isOk}`, 'blue'));
+          log(`Route: ${link.file}\nLink: ${link.href}\nText: ${link.text}\nStatus: ${link.status}\nIsOk? ${link.isOk}`);
         });
       })
       .catch((err) => log(err));
@@ -46,10 +43,10 @@ const userCli = (route) => {
     return mdLinks(route, { validate: false })
       .then((arrayOfLinks) => {
         if (arrayOfLinks.length <= 0) {
-          new Error(log(colorizeText('ESTE ARCHIVO NO CONTIENE ENLACES, PRUEBA CON OTRA RUTA', 'red')));
+          new Error(log('ESTE ARCHIVO NO CONTIENE ENLACES, PRUEBA CON OTRA RUTA'));
         }
         const stats = calculateLinksStats(arrayOfLinks);
-        log(colorizeText(` LINKS:\n  Total: ${stats.Total}\n  Unique: ${stats.Unique}`, 'magenta'));
+        log(` LINKS:\n  Total: ${stats.Total}\n  Unique: ${stats.Unique}`);
       })
       .catch((err) => log(err));
   }
@@ -57,10 +54,10 @@ const userCli = (route) => {
     return mdLinks(route, { validate: false })
       .then((arrayOfLinks) => {
         if (arrayOfLinks.length <= 0) {
-          new Error(log(colorizeText('ESTE ARCHIVO NO CONTIENE ENLACES, PRUEBA CON OTRA RUTA', 'red')));
+          new Error(log('ESTE ARCHIVO NO CONTIENE ENLACES, PRUEBA CON OTRA RUTA'));
         }
         arrayOfLinks.forEach((link) => {
-          log(colorizeText(`Route: ${link.file}\nLink: ${link.href}\nText: ${link.text}`, 'blue'));
+          log(`Route: ${link.file}\nLink: ${link.href}\nText: ${link.text}`);
         });
       })
       .catch((err) => log(err));

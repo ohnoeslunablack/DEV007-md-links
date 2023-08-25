@@ -43,3 +43,4 @@ const filterMarkdownFiles = (routeAbsolute) => {
 };
 
 module.exports = { colorizeText, convertToAbsolutePath, getFilesArray, filterMarkdownFiles, isFile };
+
